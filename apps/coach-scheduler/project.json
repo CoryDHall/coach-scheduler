@@ -1,0 +1,8 @@
+{
+  "name": "coach-scheduler",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/coach-scheduler",
+  "projectType": "application",
+  "targets": {},
+  "tags": []
+}
