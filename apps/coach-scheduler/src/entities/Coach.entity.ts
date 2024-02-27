@@ -1,20 +1,11 @@
-import { Collection, EntitySchema } from "@mikro-orm/core";
-import { UserBaseEntity, schema as UserSchema } from "./User.entity";
-import { OpenAppointment } from "./OpenAppointment.entity";
-/// @ts-expect-error - partial schema
-export class CoachUser implements UserBaseEntity {
-  OpenSlots = new Collection<OpenAppointment>(this);
+import { Collection, Entity, EntitySchema, OneToMany } from '@mikro-orm/core';
+import { UserBaseEntity, UserType } from './User.entity';
+import { CoachAppointment } from './OpenAppointment.entity';
+
+@Entity({
+  discriminatorValue: UserType.COACH,
+})
+export class CoachUser extends UserBaseEntity {
+  @OneToMany({ entity: () => CoachAppointment, mappedBy: 'coach', orphanRemoval: true })
+    appointments = new Collection<CoachAppointment>(this);
 }
-
-export const schema = new EntitySchema<CoachUser, UserBaseEntity>({
-  class: CoachUser,
-  extends: UserSchema,
-  properties: {
-    OpenSlots: {
-      kind: "1:m",
-      entity: () => "OpenAppointment",
-      mappedBy: slot => slot.coach,
-
-    },
-  },
-});

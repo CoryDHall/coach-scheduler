@@ -1,17 +1,24 @@
-import { EntitySchema } from "@mikro-orm/core";
+import { Entity, EntitySchema, Enum, Index, Property } from '@mikro-orm/core';
+import { BaseEntity } from './Base.entity';
 
-export interface UserBaseEntity {
-  id: number;
-  email: string;
-  username: string;
+export enum UserType {
+  COACH= 'coach',
+  STUDENT = 'student',
 }
 
-export const schema = new EntitySchema<UserBaseEntity>({
-  name: "UserBaseEntity",
+@Entity({
+  discriminatorColumn: 'userType',
   abstract: true,
-  properties: {
-    id: { type: "number", primary: true },
-    email: { type: "string" },
-    username: { type: "string" },
-  },
-});
+  tableName: 'users',
+})
+export class UserBaseEntity extends BaseEntity {
+  @Property({ unique: true })
+  @Index()
+    email!: string;
+
+  @Property()
+    username!: string;
+
+  @Enum({ items: () => UserType, nativeEnumName: 'user_type' })
+    userType!: UserType;
+}

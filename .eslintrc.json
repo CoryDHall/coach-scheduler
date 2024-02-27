@@ -24,7 +24,21 @@
     {
       "files": ["*.ts", "*.tsx"],
       "extends": ["plugin:@nx/typescript"],
-      "rules": {}
+      "rules": {
+        "object-curly-newline":"off",
+        "object-property-newline": ["warn", {
+          "allowAllPropertiesOnSameLine": true
+          }],
+        "@typescript-eslint/quotes": ["warn", "single", { "avoidEscape": true }],
+        "@typescript-eslint/comma-dangle": ["warn", "always-multiline"],
+        "@typescript-eslint/object-curly-spacing": ["warn", "always"],
+        "max-len": ["warn", { "code": 140 }],
+        "@typescript-eslint/indent": ["warn", 2],
+        "func-call-spacing": ["warn", "never"],
+        "no-multi-spaces": "warn",
+        "no-multiple-empty-lines": "warn",
+        "prefer-template": "warn"
+      }
     },
     {
       "files": ["*.js", "*.jsx"],
