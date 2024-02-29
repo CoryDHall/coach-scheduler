@@ -40,10 +40,10 @@ export function getTimeWindowWithDuration(
   cond: args => ({ beginAt: { $gte: args.timeWindow[0] }, endAt: { $lte: args.timeWindow[1] } }),
 })
 export abstract class Appointment extends BaseEntity {
-  @Property({ type: 'date' })
+  @Property({ })
     beginAt!: Date;
 
-  @Property({ type: 'date', check: '("beginAt" < "endAt")' })
+  @Property({ check: '("beginAt" < "endAt")' })
     endAt!: Date;
 
   get timeWindow(): TimeWindow {

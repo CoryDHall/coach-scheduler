@@ -1,5 +1,5 @@
-import { Cascade, Entity, EntitySchema, Filter, ManyToOne, OneToOne } from '@mikro-orm/core';
-import type { Rel } from '@mikro-orm/core';
+import { Entity, Filter, ManyToOne } from '@mikro-orm/core';
+import type { Ref, Rel } from '@mikro-orm/core';
 import { CoachUser } from './Coach.entity';
 import { Appointment } from './Appointment.entity';
 import { StudentUser } from './Student.entity';
@@ -14,9 +14,12 @@ export class CoachAppointment extends Appointment {
 
 
   @ManyToOne({
-    entity: () => StudentUser,
+    entity: () => StudentUser ,
     nullable: true,
-    eager: true,
+    eager: false,
+    lazy: true,
+    ref: true,
+    updateRule: 'set null',
   })
-    student?: Rel<StudentUser>;
+    student?: Ref<StudentUser>;
 }

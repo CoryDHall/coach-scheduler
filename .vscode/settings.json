@@ -7,5 +7,6 @@
     "revealOn": "run",
     "revealWithFocus": "none",
     "clearOnRun": "none"
-  }
+  },
+  "editor.wordWrap": "bounded"
 }
