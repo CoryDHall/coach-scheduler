@@ -11,9 +11,13 @@ export default defineConfig({
   entitiesTs: ['src/entities/**/*.entity.ts'],
   entities: [
     UserBaseEntity,
+    UserSession,
     CoachUser,
     StudentUser,
+    Appointment,
     CoachAppointment,
   ],
   debug: true,
+  driverOptions: {
+  },
 });

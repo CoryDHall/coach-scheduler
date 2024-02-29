@@ -8,4 +8,7 @@ import { CoachAppointment } from './OpenAppointment.entity';
 export class CoachUser extends UserBaseEntity {
   @OneToMany({ entity: () => CoachAppointment, mappedBy: 'coach', orphanRemoval: true })
     appointments = new Collection<CoachAppointment>(this);
+
+  @OneToMany(() => CoachAppointment, 'coach', { where: ['future', 'booked'] })
+    upcomingAppointments = new Collection<CoachAppointment>(this);
 }

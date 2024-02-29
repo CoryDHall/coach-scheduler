@@ -1,16 +1,16 @@
-import { CoachUser } from '../../../entities/Coach.entity';
-import { UserSession, UserType } from '../../../entities/UserSession.entity';
-import getEm from '../../../utils/getEm';
-import withORM from '../../../utils/withORM';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { jsonResponse } from '../_helpers/response';
 import { CoachAppointment } from '../../../entities/OpenAppointment.entity';
+import { requestJson } from '../_helpers/requestJson';
+import { Entities, getEm, withORM } from '../../_utils';
 
+
+import CoachUser = Entities.CoachUser.CoachUser;
 async function Index(_req: NextApiRequest) {
   const em = getEm();
   const repo = em.getRepository(CoachUser);
   const query = repo.findAll({
-    populate: ['appointments'],
+    populate: ['appointments', 'upcomingAppointments'],
   });
   return jsonResponse(query, 'Error fetching coaches');
 }
@@ -20,7 +20,7 @@ export const GET = withORM(Index);
 async function Create(req: NextApiRequest) {
   const em = getEm();
   const repo = em.getRepository(CoachUser);
-  const reqData = await (req as unknown as Response).json();
+  const reqData = await requestJson(req as unknown as Request);
   console.log('coach', reqData);
   const coach = repo.create(reqData);
   return jsonResponse(

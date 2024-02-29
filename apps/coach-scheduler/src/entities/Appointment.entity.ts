@@ -37,7 +37,8 @@ export function getTimeWindowWithDuration(
 @Filter({ name: 'current', cond: { beginAt: { $lte: 'now()' }, endAt: { $gte: 'now()' } } })
 @Filter({
   name: 'between',
-  cond: args => ({ beginAt: { $gte: args.timeWindow[0] }, endAt: { $lte: args.timeWindow[1] } }) })
+  cond: args => ({ beginAt: { $gte: args.timeWindow[0] }, endAt: { $lte: args.timeWindow[1] } }),
+})
 export abstract class Appointment extends BaseEntity {
   @Property({ type: 'date' })
     beginAt!: Date;

@@ -1,5 +1,6 @@
-import { Entity, EntitySchema, Enum, Index, Property } from '@mikro-orm/core';
+import { Collection, Entity, EntitySchema, Enum, Index, OneToMany, Property, Unique } from '@mikro-orm/core';
 import { BaseEntity } from './Base.entity';
+import { UserSession } from './UserSession.entity';
 
 export enum UserType {
   COACH= 'coach',
@@ -21,4 +22,15 @@ export class UserBaseEntity extends BaseEntity {
 
   @Enum({ items: () => UserType, nativeEnumName: 'user_type' })
     userType!: UserType;
+
+  @Property({
+    hidden: true,
+    lazy: true,
+    generated: cols => `(encode(digest(${(cols as UserBaseEntity).email}, 'sha256'), 'hex')) stored` })
+  @Unique()
+  readonly identityHash!: string;
+
+  @OneToMany({ entity: () => UserSession, mappedBy: obj => obj.user })
+    sessions = new Array<UserSession>();
+
 }
